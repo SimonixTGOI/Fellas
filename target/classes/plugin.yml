@@ -1,0 +1,11 @@
+name: fellas
+version: '1.0-SNAPSHOT'
+main: miao.fellas.Fellas
+api-version: '26.1.2'
+commands:
+  messaggio:
+    description: Invia un messaggio al giocatore
+    usage: /messaggio [messaggio]
+  kit:
+    description: Da al player un kit
+    usage: /kit <starter/pvp/archer>

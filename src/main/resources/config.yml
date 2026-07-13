@@ -1,0 +1,13 @@
+kits:
+  starter:
+    price: 100
+    permission: fellas.kit.starter
+    cooldown: 60
+  pvp:
+    price: 250
+    permission: fellas.kit.pvp
+    cooldown: 600
+  archer:
+    price: 200
+    permission: fellas.kit.archer
+    cooldown: 600

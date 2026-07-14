@@ -1,16 +1,25 @@
 package miao.fellas.constructor;
 
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 
 public class Messaggio {
-    private final String testo; //dichiaro una variabile per la classe, final si usa quando quella variabile non andrà modificata
+    private final Plugin plugin;
 
-    public Messaggio(String testo) {
-        this.testo = testo; //this serve a indicare la variabile di QUESTO oggetto, si usa quando hai più variabili con lo stesso nome all'interno della classe
+    public Messaggio(Plugin plugin) {
+         this.plugin = plugin;
     }
 
     public void send(Player player) {
-        player.sendMessage(testo);
+        String text = plugin.getConfig().getString("messaggio.text");
+
+        if(text == null) {
+            player.sendMessage("Non è presente un messaggio");
+        }else{
+            player.sendMessage(text);
+        }
+
+
     }
 
 }

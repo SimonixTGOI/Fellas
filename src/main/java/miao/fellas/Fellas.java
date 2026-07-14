@@ -22,7 +22,7 @@ public final class Fellas extends JavaPlugin {
 
         //il coso requireNonNull abbastanza easy semplicemente non deve essere null sennò ferma tutto prima ancora di iniziare
 
-        Objects.requireNonNull(getCommand("messaggio")).setExecutor(new Send());
+        Objects.requireNonNull(getCommand("messaggio")).setExecutor(new Send(thisgit a));
 
         KitManager kitManager = new KitManager(this);
         KitTimeManager kitTimeManager = new KitTimeManager();

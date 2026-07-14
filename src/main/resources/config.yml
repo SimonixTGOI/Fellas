@@ -3,13 +3,26 @@ kits:
     price: 100
     permission: fellas.kit.starter
     cooldown: 60
+    items:
+      - IRON_SWORD:1
+      - COOKED_BEEF:8
   pvp:
     price: 250
     permission: fellas.kit.pvp
     cooldown: 600
+    items:
+      - DIAMOND_SWORD:1
+      - GOLDEN_APPLE:4
+      - IRON_CHESTPLATE:1
   archer:
     price: 200
     permission: fellas.kit.archer
     cooldown: 600
+    items:
+      - BOW:1
+      - LEATHER_LEGGINGS:1
+      - LEATHER_CHESTPLATE:1
+      - GOLDEN_APPLE:8
+      - ARROW:64
 messaggio:
   text: Benvenuto!

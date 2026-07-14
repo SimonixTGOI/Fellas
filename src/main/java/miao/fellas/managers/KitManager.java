@@ -2,6 +2,7 @@ package miao.fellas.managers;
 
 import miao.fellas.constructor.Kit;
 import org.bukkit.Material;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -9,53 +10,73 @@ import java.util.*;
 
 public class KitManager {
     private final Map<String, Kit> kits;
+    private final JavaPlugin plugin;
+
+
+    private ItemStack[] loadItems(String path) {
+        List<String> itemsStringList = plugin.getConfig().getStringList(path);
+        List<ItemStack> items = new ArrayList<>();
+        for(String itemsString : itemsStringList){
+
+            String[] parts = itemsString.split(":");
+            if(parts.length != 2){
+                plugin.getLogger().warning("Invalid items in kit: " + itemsString);
+                continue;
+            }
+            Material material = Material.getMaterial(parts[0].trim().toUpperCase());
+
+            if(material == null){
+                plugin.getLogger().warning("Invalid material in kit: " + itemsString);
+                continue;
+            }
+
+            try{
+                int amount = Integer.parseInt(parts[1].trim());
+
+
+                ItemStack item = new ItemStack(material, amount);
+                items.add(item);
+
+            } catch (NumberFormatException e){
+                plugin.getLogger().warning("Invalid amount in kit: " +  itemsString);
+
+            }
+
+        }
+        return items.toArray(new ItemStack[0]);
+    }
+
+
+    private void loadKit(String name) {
+        name = name.toLowerCase();
+
+        int price = plugin.getConfig().getInt("kits."+name+".price");
+        String permission = plugin.getConfig().getString("kits."+name+".permission");
+        int cooldown = plugin.getConfig().getInt("kits."+name+".cooldown");
+
+        kits.put(name, new Kit(
+                name,
+                price,
+                permission,
+                cooldown,
+                loadItems("kits."+name+".items")));
+    }
+
 
     public KitManager(JavaPlugin plugin) {
         this.kits = new HashMap<>();
+        this.plugin = plugin;
 
+        ConfigurationSection section = plugin.getConfig().getConfigurationSection("kits");
 
-        int starterPrice = plugin.getConfig().getInt("kits.starter.price");
-        String starterPermission = plugin.getConfig().getString("kits.starter.permission");
-        int starterCooldown = plugin.getConfig().getInt("kits.starter.cooldown");
+        if(section == null){
+            plugin.getLogger().warning("No kits in config.yml");
+            return;
+        }
 
-        kits.put("starter", new Kit(
-                "starter",
-                starterPrice,
-                starterPermission,
-                starterCooldown,
-                new ItemStack(Material.IRON_SWORD, 1),
-                new ItemStack(Material.COOKED_BEEF, 8)
-
-        ));
-
-        int pvpPrice = plugin.getConfig().getInt("kits.pvp.price");
-        String pvpPermission = plugin.getConfig().getString("kits.pvp.permission");
-        int pvpCooldown = plugin.getConfig().getInt("kits.pvp.cooldown");
-
-        kits.put("pvp", new Kit(
-                "pvp",
-                pvpPrice,
-                pvpPermission,
-                pvpCooldown,
-                new ItemStack(Material.DIAMOND_SWORD, 1),
-                new ItemStack(Material.GOLDEN_APPLE, 4),
-                new ItemStack(Material.IRON_CHESTPLATE, 1)
-        ));
-
-        int archerPrice = plugin.getConfig().getInt("kits.archer.price");
-        String archerPermission = plugin.getConfig().getString("kits.archer.permission");
-        int archerCooldown = plugin.getConfig().getInt("kits.archer.cooldown");
-
-        kits.put("archer", new Kit(
-                "archer",
-                archerPrice,
-                archerPermission,
-                archerCooldown,
-                new ItemStack(Material.BOW, 1),
-                new ItemStack(Material.LEATHER_LEGGINGS, 1),
-                new ItemStack(Material.LEATHER_CHESTPLATE, 1),
-                new ItemStack(Material.GOLDEN_APPLE, 8)
-        ));
+        for(String name : section.getKeys(false)){
+            loadKit(name);
+        }
 
     }
 

@@ -2,6 +2,8 @@ name: fellas
 version: '1.0-SNAPSHOT'
 main: miao.fellas.Fellas
 api-version: '26.1.2'
+softdepend:
+  - Vault
 commands:
   message:
     description: Sends a message to the sender
@@ -10,11 +12,11 @@ commands:
 
   kit:
     description: Gives the selected kit
-    usage: /kit <starter/pvp/archer>
+    usage: /kit <kit>
     permission: fellas.kit
 
   kitreload:
-    description: reloads the kit detection
+    description: reloads kits from the config.yml
     usage: /kitreload
     permission: fellas.kit.reload
 
@@ -33,3 +35,12 @@ permissions:
   fellas.kit.reload:
     description: Grants the use of /kitreload
     default: op
+  fellas.kit.bypasscooldown:
+    description: Allows bypassing kit cooldown
+    default: op
+  fellas.kit.admin:
+    description: Grants all the admin commands for kits
+    default: op
+    children:
+      fellas.kit.bypasscooldown: true
+      fellas.kit.reload: true

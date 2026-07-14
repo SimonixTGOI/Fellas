@@ -2,6 +2,7 @@ miao\fellas\managers\KitTimeManager.class
 miao\fellas\managers\KitManager.class
 miao\fellas\Fellas.class
 miao\fellas\constructor\Kit.class
+miao\fellas\managers\EconomyManager.class
 miao\fellas\tabs\KitTabCompleter.class
 miao\fellas\commands\KitReloadCommand.class
 miao\fellas\constructor\Message.class

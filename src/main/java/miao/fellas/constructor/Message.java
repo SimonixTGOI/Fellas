@@ -3,10 +3,10 @@ package miao.fellas.constructor;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
-public class Messaggio {
+public class Message {
     private final Plugin plugin;
 
-    public Messaggio(Plugin plugin) {
+    public Message(Plugin plugin) {
          this.plugin = plugin;
     }
 

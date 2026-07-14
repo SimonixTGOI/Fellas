@@ -1,6 +1,6 @@
 package miao.fellas.commands;
 
-import miao.fellas.constructor.Messaggio;
+import miao.fellas.constructor.Message;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -21,7 +21,7 @@ public class Send implements CommandExecutor { //richiede il public boolean
             return true;
         }
 
-        Messaggio m1 = new Messaggio(plugin);
+        Message m1 = new Message(plugin);
         m1.send(player);
 
         return true;

@@ -12,6 +12,23 @@ public class KitManager {
     private final Map<String, Kit> kits;
     private final JavaPlugin plugin;
 
+    public void reloadKits() {
+        kits.clear();
+
+        ConfigurationSection section = plugin.getConfig().getConfigurationSection("kits");
+
+        if(section == null) {
+            plugin.getLogger().warning("No kits found in config.yml");
+            return;
+        }
+
+        for(String name : section.getKeys(false)) {
+            loadKit(name.toLowerCase());
+        }
+
+        plugin.getLogger().info("Kits reloaded.");
+    }
+
 
     private ItemStack[] loadItems(String path) {
         List<String> itemsStringList = plugin.getConfig().getStringList(path);
@@ -48,18 +65,19 @@ public class KitManager {
 
 
     private void loadKit(String name) {
-        name = name.toLowerCase();
+        String key = name.toLowerCase();
+        String path = "kits." + name;
 
-        int price = plugin.getConfig().getInt("kits."+name+".price");
-        String permission = plugin.getConfig().getString("kits."+name+".permission");
-        int cooldown = plugin.getConfig().getInt("kits."+name+".cooldown");
+        int price = plugin.getConfig().getInt(path + ".price");
+        String permission = plugin.getConfig().getString(path + ".permission");
+        int cooldown = plugin.getConfig().getInt(path + ".cooldown");
 
-        kits.put(name, new Kit(
-                name,
+        kits.put(key, new Kit(
+                key,
                 price,
                 permission,
                 cooldown,
-                loadItems("kits."+name+".items")));
+                loadItems(path + ".items")));
     }
 
 
@@ -67,16 +85,7 @@ public class KitManager {
         this.kits = new HashMap<>();
         this.plugin = plugin;
 
-        ConfigurationSection section = plugin.getConfig().getConfigurationSection("kits");
-
-        if(section == null){
-            plugin.getLogger().warning("No kits in config.yml");
-            return;
-        }
-
-        for(String name : section.getKeys(false)){
-            loadKit(name);
-        }
+        reloadKits();
 
     }
 

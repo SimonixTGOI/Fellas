@@ -4,8 +4,32 @@ main: miao.fellas.Fellas
 api-version: '26.1.2'
 commands:
   messaggio:
-    description: Invia un messaggio al giocatore
-    usage: /messaggio [messaggio]
+    description: Sends a message to the sender
+    usage: /message [message]
+    permission: fellas.message
+
   kit:
-    description: Da al player un kit
+    description: Gives the selected kit
     usage: /kit <starter/pvp/archer>
+    permission: fellas.kit
+
+  kitreload:
+    description: reloads the kit detection
+    usage: /kitreload
+    permission: fellas.kit.reload
+
+
+
+
+
+
+permissions:
+  fellas.message:
+    description: Grants the use of /message
+    default: op
+  fellas.kit:
+    description: Grants the use of /kit
+    default: true
+  fellas.kit.reload:
+    description: Grants the use of /kitreload
+    default: op

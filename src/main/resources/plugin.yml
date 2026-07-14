@@ -3,7 +3,7 @@ version: '1.0-SNAPSHOT'
 main: miao.fellas.Fellas
 api-version: '26.1.2'
 commands:
-  messaggio:
+  message:
     description: Sends a message to the sender
     usage: /message [message]
     permission: fellas.message

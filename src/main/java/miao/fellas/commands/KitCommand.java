@@ -77,7 +77,7 @@ public class KitCommand implements CommandExecutor {
         if(price != 0) {
 
             if(!plugin.isVaultEnabled()) {
-                player.sendMessage("<red>Economy is temporarily disabled. This kit Cannot be claimed</red>");
+                player.sendMessage(MessageUtil.color("<red>Economy is temporarily disabled. This kit Cannot be claimed</red>"));
                 return true;
             }
 
@@ -90,7 +90,7 @@ public class KitCommand implements CommandExecutor {
             }
 
             if(!economy.withdrawPlayer(player, price).transactionSuccess()) {
-                player.sendMessage("<red>Transaction failed.</red>");
+                player.sendMessage(MessageUtil.color("<red>Transaction failed.</red>"));
                 return true;
             }
 

@@ -9,4 +9,5 @@ public class MessageUtil {
     public static Component color(String message) {
         return MINI_MESSAGE.deserialize(message);
     }
+
 }

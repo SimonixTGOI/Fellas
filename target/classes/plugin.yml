@@ -5,10 +5,10 @@ api-version: '26.1.2'
 softdepend:
   - Vault
 commands:
-  message:
+  send:
     description: Sends a message to the sender
-    usage: /message [message]
-    permission: fellas.message
+    usage: /send [player] [message]
+    permission: fellas.send
 
   kit:
     description: Gives the selected kit
@@ -31,7 +31,7 @@ commands:
 
 
 permissions:
-  fellas.message:
+  fellas.send:
     description: Grants the use of /message
     default: op
 

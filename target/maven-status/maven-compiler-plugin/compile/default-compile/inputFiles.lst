@@ -3,9 +3,10 @@ C:\Users\simon\Users\simon\Desktop\informatica\java\fellas\src\main\java\miao\fe
 C:\Users\simon\Users\simon\Desktop\informatica\java\fellas\src\main\java\miao\fellas\commands\Kits.java
 C:\Users\simon\Users\simon\Desktop\informatica\java\fellas\src\main\java\miao\fellas\commands\Send.java
 C:\Users\simon\Users\simon\Desktop\informatica\java\fellas\src\main\java\miao\fellas\constructor\Kit.java
-C:\Users\simon\Users\simon\Desktop\informatica\java\fellas\src\main\java\miao\fellas\constructor\Message.java
 C:\Users\simon\Users\simon\Desktop\informatica\java\fellas\src\main\java\miao\fellas\Fellas.java
 C:\Users\simon\Users\simon\Desktop\informatica\java\fellas\src\main\java\miao\fellas\managers\KitManager.java
 C:\Users\simon\Users\simon\Desktop\informatica\java\fellas\src\main\java\miao\fellas\managers\KitTimeManager.java
+C:\Users\simon\Users\simon\Desktop\informatica\java\fellas\src\main\java\miao\fellas\managers\MessageManager.java
 C:\Users\simon\Users\simon\Desktop\informatica\java\fellas\src\main\java\miao\fellas\tabs\KitTabCompleter.java
+C:\Users\simon\Users\simon\Desktop\informatica\java\fellas\src\main\java\miao\fellas\tabs\SendTabCompleter.java
 C:\Users\simon\Users\simon\Desktop\informatica\java\fellas\src\main\java\miao\fellas\utils\MessageUtil.java

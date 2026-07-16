@@ -6,7 +6,9 @@ import miao.fellas.Fellas;
 import miao.fellas.managers.KitManager;
 import miao.fellas.constructor.Kit;
 import miao.fellas.managers.KitTimeManager;
+import miao.fellas.managers.MessageManager;
 import miao.fellas.utils.MessageUtil;
+import net.kyori.adventure.text.Component;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -14,6 +16,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 
@@ -21,11 +25,13 @@ public class KitCommand implements CommandExecutor {
 
     private final KitManager kitManager;
     private final KitTimeManager kitTimeManager;
+    private final MessageManager messageManager;
     private final Fellas plugin;
 
-    public KitCommand(KitManager kitManager, KitTimeManager kitTimeManager, Fellas plugin) {
+    public KitCommand(KitManager kitManager, KitTimeManager kitTimeManager, MessageManager messageManager, Fellas plugin) {
         this.kitManager = kitManager;
         this.kitTimeManager = kitTimeManager;
+        this.messageManager = messageManager;
         this.plugin = plugin;
     }
 
@@ -42,19 +48,31 @@ public class KitCommand implements CommandExecutor {
         }
 
         if(args.length == 0) {
-            sender.sendMessage(MessageUtil.color("<red>Usage: /kit [kit]</red>"));
+            sender.sendMessage(messageManager.get(
+                    "kitUsage",
+                    "<red>Usage: /kit [kit]</red>"
+            ));
             return true;
         }
 
 
         Kit kit = kitManager.getKit(args[0]);
         if(kit == null) {
-            player.sendMessage(MessageUtil.color("<red>This kit does not exist</red>") );
+
+            player.sendMessage(messageManager.get(
+                    "kitNotFound",
+                    "<red>This kit does not exist</red>"
+            ));
             return true;
         }
 
         if(!(player.hasPermission(kit.getPermission()))) {
-            player.sendMessage(MessageUtil.color("<red>Insufficient permissions.</red> <dark_purple>(" + kit.getPermission() + ")</dark_purple>"));
+            player.sendMessage(messageManager.get(
+                    "insufficientPermissions",
+                    "<red>Insufficient permissions.</red> <dark_purple>(" + kit.getPermission() + ")</dark_purple>",
+                    "{permission}",
+                    kit.getPermission())
+            );
             return true;
         }
 
@@ -64,40 +82,70 @@ public class KitCommand implements CommandExecutor {
         UUID uuid = player.getUniqueId();
 
         if((kitTimeManager.isOnCooldown(uuid,name, cooldown)) && !player.hasPermission("fellas.kit.bypasscooldown")) {
-            int remainingTime = kitTimeManager.getRemainingTime(uuid, name, cooldown);
-            player.sendMessage(MessageUtil.color("<red>Kit still in cooldown, remaining time: </dark_red><purple>" + remainingTime + "s</dark_purple><red>.</red>") );
+            String remainingCooldown = String.valueOf(kitTimeManager.getRemainingTime(uuid, name, cooldown));
+            player.sendMessage(messageManager.get("kitCooldown",
+                    "<red>Kit still in cooldown, remaining time: </red><dark_purple>" + remainingCooldown + "s</dark_purple><red>.</red>",
+                    "{remainingCooldown}",
+                    remainingCooldown
+            ));
             return true;
         }
 
 
 
         int price = kit.getPrice();
-        Economy economy = plugin.getEconomy();
+        Component successMessage;
 
-        if(price != 0) {
+        if(price == 0) {
 
-            if(!plugin.isVaultEnabled()) {
-                player.sendMessage(MessageUtil.color("<red>Economy is temporarily disabled. This kit Cannot be claimed</red>"));
-                return true;
-            }
+            successMessage = messageManager.get(
+                    "kitClaimed",
+                    "<dark_purple>Kit " + kit.getName() + " has been claimed!</dark_purple>",
+                    "{kitName}",
+                    kit.getName()
+                    );
 
-
-
+        } else if(plugin.isVaultEnabled()) {
+            Economy economy = plugin.getEconomy();
 
             if(!economy.has(player, price)) {
-                player.sendMessage(MessageUtil.color("<red>You don't have enough money to claim this kit</red>"));
+                player.sendMessage(messageManager.get(
+                        "notEnoughMoney",
+                        "<red>You don't have enough money to claim this kit</red>"
+                ));
                 return true;
             }
 
             if(!economy.withdrawPlayer(player, price).transactionSuccess()) {
-                player.sendMessage(MessageUtil.color("<red>Transaction failed.</red>"));
+                player.sendMessage(messageManager.get(
+                        "transactionFailed",
+                        "<red>Transaction failed.</red>"
+                ));
                 return true;
             }
+            Map<String, String> placeholders = new HashMap<>();
+            placeholders.put("{kitName}", kit.getName());
+            placeholders.put("{balance}", String.valueOf(economy.getBalance(player)));
+            successMessage = messageManager.get(
+                    "kitPurchase",
+                    "<dark_purple>Kit " + kit.getName() + " has been purchased!</dark_purple> <yellow>New balance:</yellow> <green>€" + economy.getBalance(player) + "</green>",
+                    placeholders
+            );
 
+        } else {
+            player.sendMessage(messageManager.get(
+                    "economyDisabled",
+                    "<red>Economy is temporarily disabled. This paid kit cannot be claimed.</red>"
+            ));
+            return true;
         }
+
         kitTimeManager.setCooldown(uuid, name);
         kit.give(player);
-        player.sendMessage(MessageUtil.color("<dark_purple>Kit " + kit.getName() + " has been purchased! New balance: <green>€" + economy.getBalance(player) + "</green>"));
+        player.sendMessage(successMessage);
+
+
+
 
 
         return true;

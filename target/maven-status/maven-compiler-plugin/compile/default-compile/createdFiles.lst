@@ -1,11 +1,12 @@
 miao\fellas\managers\KitTimeManager.class
+miao\fellas\tabs\SendTabCompleter.class
 miao\fellas\managers\KitManager.class
 miao\fellas\Fellas.class
 miao\fellas\tabs\KitTabCompleter.class
 miao\fellas\utils\MessageUtil.class
+miao\fellas\managers\MessageManager.class
 miao\fellas\constructor\Kit.class
 miao\fellas\commands\KitReloadCommand.class
-miao\fellas\constructor\Message.class
 miao\fellas\commands\Send.class
 miao\fellas\commands\KitCommand.class
 miao\fellas\commands\Kits.class

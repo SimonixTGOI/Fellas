@@ -1,5 +1,6 @@
 package miao.fellas.commands;
 
+import miao.fellas.managers.MessageManager;
 import miao.fellas.utils.MessageUtil;
 import miao.fellas.managers.KitManager;
 import org.bukkit.command.Command;
@@ -11,9 +12,12 @@ import org.jetbrains.annotations.NotNull;
 public class KitReloadCommand implements CommandExecutor {
     private final KitManager kitManager;
     private final Plugin plugin;
+    private final MessageManager messageManager;
 
-    public KitReloadCommand(KitManager kitManager, Plugin plugin) {
+
+    public KitReloadCommand(KitManager kitManager, MessageManager messageManager, Plugin plugin) {
         this.kitManager = kitManager;
+        this.messageManager = messageManager;
         this.plugin = plugin;
     }
 
@@ -23,14 +27,22 @@ public class KitReloadCommand implements CommandExecutor {
                              String @NotNull []  args) {
 
         if (!sender.hasPermission("fellas.kit.reload")) {
-            sender.sendMessage(MessageUtil.color("<red>Permessi insufficienti.</red> <purple>(fellas.kit.reload)</purple>"));
+            sender.sendMessage(messageManager.get(
+                    "insufficientPermission",
+                    "<red>Permessi insufficienti.</red> <purple>(fellas.kit.reload)</purple>",
+                    "{permission}",
+                    "fellas.kit.reload"
+            ));
             return true;
         }
 
         plugin.reloadConfig();
         kitManager.reloadKits();
 
-        sender.sendMessage(MessageUtil.color("<green>Kits reloaded.</green>"));
+        sender.sendMessage(messageManager.get(
+                "kitReload",
+                "<green>Kits reloaded.</green>"
+        ));
 
         return true;
     }

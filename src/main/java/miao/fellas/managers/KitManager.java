@@ -13,6 +13,7 @@ public class KitManager {
     private final JavaPlugin plugin;
 
     public void reloadKits() {
+        plugin.getLogger().info("Loading kits...");
         kits.clear();
 
         ConfigurationSection section = plugin.getConfig().getConfigurationSection("kits");
@@ -26,7 +27,7 @@ public class KitManager {
             loadKit(name.toLowerCase());
         }
 
-        plugin.getLogger().info("Kits reloaded.");
+        plugin.getLogger().info("Kits loaded.");
     }
 
 

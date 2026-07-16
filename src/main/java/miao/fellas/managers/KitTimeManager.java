@@ -39,7 +39,14 @@ public class KitTimeManager {
         Long current = System.currentTimeMillis();
 
         Map<String, Long> kitMap = timeMap.get(uuid);
+        if(kitMap == null) {
+            return 0;
+        }
         Long time = kitMap.get(name);
+
+        if(time == null) {
+            return 0;
+        }
 
         long difference = current-time;
 

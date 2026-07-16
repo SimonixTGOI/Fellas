@@ -46,7 +46,6 @@ public class Kit {
         for (ItemStack item : items) {
             player.getInventory().addItem(item.clone());
         }
-        player.sendMessage("Kit " + name + " riscattato, prezzo: " + price + ".");
     }
 
 

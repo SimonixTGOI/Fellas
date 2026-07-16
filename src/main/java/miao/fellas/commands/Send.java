@@ -8,6 +8,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,14 +36,14 @@ public class Send implements CommandExecutor {
         }
 
         if(args.length == 1) {
-            sender.sendMessage((messageManager.get("sendMessageMissing", "<red>Message missing.</red>")));
+            sender.sendMessage(messageManager.get("sendMessageMissing", "<red>Message missing.</red>"));
             return true;
         }
-        String message = "";
-        for(int i = 1; i<args.length; i++) {
 
-            message = message.concat(args[i]);
-        }
+        String[] argsCopy = Arrays.copyOfRange(args, 1, args.length);
+
+        String message = String.join(" ", argsCopy);
+
         Map<String, String> placeholders = new HashMap<>();
         placeholders.put("{sender}", sender.getName());
         placeholders.put("{message}", message);

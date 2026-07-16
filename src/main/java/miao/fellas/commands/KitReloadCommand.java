@@ -28,7 +28,7 @@ public class KitReloadCommand implements CommandExecutor {
 
         if (!sender.hasPermission("fellas.kit.reload")) {
             sender.sendMessage(messageManager.get(
-                    "insufficientPermission",
+                    "insufficientPermissions",
                     "<red>Permessi insufficienti.</red> <purple>(fellas.kit.reload)</purple>",
                     "{permission}",
                     "fellas.kit.reload"

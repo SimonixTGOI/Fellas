@@ -70,7 +70,7 @@ public class KitManager {
         String path = "kits." + name;
 
         int price = plugin.getConfig().getInt(path + ".price");
-        String permission = plugin.getConfig().getString(path + ".permission");
+        String permission = plugin.getConfig().getString(path + ".permission", "fellas.kit." + key);
         int cooldown = plugin.getConfig().getInt(path + ".cooldown");
 
         kits.put(key, new Kit(

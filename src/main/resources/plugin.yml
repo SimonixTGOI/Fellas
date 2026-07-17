@@ -8,12 +8,10 @@ commands:
   send:
     description: Sends a message to the sender
     usage: /send [player] [message]
-    permission: fellas.send
 
   kit:
     description: Gives the selected kit
     usage: /kit <kit>
-    permission: fellas.kit
 
   kitreload:
     description: reloads kits from the config.yml
@@ -23,7 +21,6 @@ commands:
   kits:
     description: Shows the list of the available kits
     usage: /kits
-    permission: fellas.kits
 
 
 

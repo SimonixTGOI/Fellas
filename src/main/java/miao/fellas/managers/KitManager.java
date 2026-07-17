@@ -13,7 +13,6 @@ public class KitManager {
     private final JavaPlugin plugin;
 
     public void reloadKits() {
-        plugin.getLogger().info("Loading kits...");
         kits.clear();
 
         ConfigurationSection section = plugin.getConfig().getConfigurationSection("kits");
@@ -24,7 +23,7 @@ public class KitManager {
         }
 
         for(String name : section.getKeys(false)) {
-            loadKit(name.toLowerCase());
+            loadKit(name);
         }
 
         plugin.getLogger().info("Kits loaded.");
@@ -69,12 +68,12 @@ public class KitManager {
         String key = name.toLowerCase();
         String path = "kits." + name;
 
-        int price = plugin.getConfig().getInt(path + ".price");
+        double price = plugin.getConfig().getInt(path + ".price");
         String permission = plugin.getConfig().getString(path + ".permission", "fellas.kit." + key);
         int cooldown = plugin.getConfig().getInt(path + ".cooldown");
 
         kits.put(key, new Kit(
-                key,
+                name,
                 price,
                 permission,
                 cooldown,

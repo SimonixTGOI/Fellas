@@ -1,8 +1,7 @@
 package miao.fellas.commands;
 
-import miao.fellas.managers.MessageManager;
-import miao.fellas.utils.MessageUtil;
 import miao.fellas.managers.KitManager;
+import miao.fellas.managers.MessageManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -28,8 +27,8 @@ public class KitReloadCommand implements CommandExecutor {
 
         if (!sender.hasPermission("fellas.kit.reload")) {
             sender.sendMessage(messageManager.get(
-                    "insufficientPermissions",
-                    "<red>Permessi insufficienti.</red> <purple>(fellas.kit.reload)</purple>",
+                    "noPermission",
+                    "<red>Insufficient Permissions.</red> <purple>{permission}</purple>",
                     "{permission}",
                     "fellas.kit.reload"
             ));

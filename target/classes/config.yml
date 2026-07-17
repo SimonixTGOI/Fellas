@@ -25,21 +25,23 @@ kits:
       - GOLDEN_APPLE:8
       - ARROW:64
 messages:
-  insufficientPermissions: "<red>Insufficient permissions.</red> <dark_purple>({permission})</dark_purple>"
+  noPermission: "<red>Insufficient permissions.</red> <dark_purple>({permission})</dark_purple>"
+  onlyPlayer: "Only players may use this command"
   kitNotFound: "<red>This kit does not exist.</red>"
   kitUsage: "<red>Usage: /kit [kit]</red>"
-  economyDisabled: "<red>Economy is temporarily disabled. This kit Cannot be claimed</red>"
+  economyDisabled: "<red>Economy is temporarily disabled. This kit cannot be claimed.</red>"
   kitCooldown: "<red>Kit still in cooldown, remaining time: </red><dark_purple>{remainingCooldown}s</dark_purple><red>.</red>"
   kitClaimed: "<dark_purple>Kit {kitName} has been claimed!</dark_purple>"
-  KitPurchase: "<dark_purple>Kit {kitName} has been purchased!</dark_purple> <yellow>New balance:</yellow> <green>€{balance}</green>"
+  kitPurchase: "<dark_purple>Kit {kitName} has been purchased!</dark_purple> <yellow>New balance:</yellow> <green>€{balance}</green>"
   transactionFailed: "<red>Transaction failed.</red>"
   notEnoughMoney: "<red>You don't have enough money to claim this kit</red>"
   kitReload: "<green>Kits reloaded.</green>"
   kitsWithCooldown: "<blue>{kitName}</blue> <dark_purple>-</dark_purple> <yellow>price:</yellow> <green>€{price}</green> <dark_purple>-</dark_purple> <yellow>cooldown: {remainingCooldown}</yellow><dark_purple>/</dark_purple><yellow>{cooldown}s.</yellow>"
   kitsWoutCooldown: "<blue>{kitName}</blue> <dark_purple>-</dark_purple> <yellow>price:</yellow> <green>€{price}</green> <dark_purple>-</dark_purple> <yellow>cooldown: </yellow><green>ready.</green>"
-  kitsNotOne: "<dark_purple>No kits available.</dark_purple>"
+  kitsNotOne: "<red>No kits available.</red>"
+  kitsHeader: "<dark_purple>Available kits:</dark_purple>"
   sendTargetMissing: "<red>Target player missing.</red>"
-  sendTargetNotOnline: "<red>{player} not online.</red>"
+  sendTargetNotOnline: "<red>{player} is not online.</red>"
   sendMessageMissing: "<red>Message missing.</red>"
   sendMessageSent: "<blue>{sender}</blue> <dark_purple>sent you a message: </dark_purple>{message}"
 

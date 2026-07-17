@@ -28,14 +28,14 @@ public class Kits implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
         if(!(sender instanceof Player player)) {
-            sender.sendMessage("Only players may use this command");
+            sender.sendMessage(messageManager.get("onlyPlayer", "Only players may use this command"));
             return true;
         }
 
         if(!sender.hasPermission("fellas.kits")) {
             player.sendMessage(messageManager.get(
-                    "insufficientPermission",
-                    "<red>Insufficient permissions.</red> <purple>(fellas.kits)</purple>",
+                    "noPermission",
+                    "<red>Insufficient permissions.</red> <purple>{permission}</purple>",
                     "{permission}",
                     "fellas.kits"
             ));
@@ -44,13 +44,16 @@ public class Kits implements CommandExecutor {
 
         Set<String> namesSet = kitManager.getKitNames();
         boolean atLeastOne = false;
+
+
+
         for(String kitName : namesSet) {
             kitName = kitName.toLowerCase().strip();
 
             Kit kit = kitManager.getKit(kitName);
 
             int cooldown = kit.getCooldown();
-            int price = kit.getPrice();
+            double price = kit.getPrice();
             String permission = kit.getPermission();
             Map<String, String> placeholders = new HashMap<>();
             placeholders.put("{kitName}", kit.getName());
@@ -58,16 +61,31 @@ public class Kits implements CommandExecutor {
 
 
             if(player.hasPermission("fellas.kit.allkits") || player.hasPermission(permission)) {
+                if(!atLeastOne) {
+                    sender.sendMessage(messageManager.get(
+                            "kitsHeader",
+                            "<dark_purple>Available kits:</dark_purple>"));
+                }
+                atLeastOne = true;
+
 
                 if(kitTimeManager.isOnCooldown(player.getUniqueId(), kitName, cooldown)) {
                     int remainingCooldown = kitTimeManager.getRemainingTime(player.getUniqueId(), kitName, cooldown);
                     placeholders.put("{remainingCooldown}", String.valueOf(remainingCooldown));
                     placeholders.put("{cooldown}", String.valueOf(cooldown));
-                    player.sendMessage(messageManager.get("kitsWithCooldown", "<blue>" + kitName + "</blue> <dark_purple>-</dark_purple> <yellow>price:</yellow> <green>€" + price + "</green> <dark_purple>-</dark_purple> <yellow>cooldown: " + remainingCooldown + "</yellow><dark_purple>/</dark_purple><yellow>" + cooldown + "s.</yellow>", placeholders));
+                    player.sendMessage(messageManager.get(
+                            "kitsWithCooldown",
+                            "<blue>{kitName}</blue> <dark_purple>-</dark_purple> <yellow>price:</yellow> <green>€{price}</green> <dark_purple>-</dark_purple> <yellow>cooldown: {remainingCooldown}</yellow><dark_purple>/</dark_purple><yellow>{cooldown}s.</yellow>",
+                            placeholders
+                    ));
                 } else {
-                    player.sendMessage(messageManager.get("kitsWoutCooldown", "<blue>" + kitName + "</blue> <dark_purple>-</dark_purple> <yellow>price:</yellow> <green>€" + price + "</green> <dark_purple>-</dark_purple> <yellow>cooldown: </yellow>" + "<green>ready.</green>", placeholders));
+                    player.sendMessage(messageManager.get(
+                            "kitsWoutCooldown",
+                            "<blue>{kitName}</blue> <dark_purple>-</dark_purple> <yellow>price:</yellow> <green>€{price}</green> <dark_purple>-</dark_purple> <yellow>cooldown: </yellow>" + "<green>ready.</green>",
+                            placeholders
+                    ));
                 }
-                atLeastOne = true;
+
             }
 
 
@@ -76,7 +94,7 @@ public class Kits implements CommandExecutor {
 
         }
         if(!atLeastOne) {
-            player.sendMessage(messageManager.get("kitsNotOne", "<dark_purple>No kits available.</dark_purple>"));
+            player.sendMessage(messageManager.get("kitsNotOne", "<red>No kits available.</red>"));
         }
         return true;
     }

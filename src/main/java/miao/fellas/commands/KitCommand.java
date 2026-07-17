@@ -1,14 +1,12 @@
 package miao.fellas.commands;
 
 
-
-import miao.fellas.Fellas;
-import miao.fellas.managers.KitManager;
 import miao.fellas.constructor.Kit;
+import miao.fellas.managers.EconomyManager;
+import miao.fellas.managers.KitManager;
 import miao.fellas.managers.KitTimeManager;
 import miao.fellas.managers.MessageManager;
 import net.kyori.adventure.text.Component;
-import net.milkbowl.vault.economy.Economy;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -25,13 +23,13 @@ public class KitCommand implements CommandExecutor {
     private final KitManager kitManager;
     private final KitTimeManager kitTimeManager;
     private final MessageManager messageManager;
-    private final Fellas plugin;
+    private final EconomyManager economyManager;
 
-    public KitCommand(KitManager kitManager, KitTimeManager kitTimeManager, MessageManager messageManager, Fellas plugin) {
+    public KitCommand(KitManager kitManager, KitTimeManager kitTimeManager, MessageManager messageManager, EconomyManager economyManager) {
         this.kitManager = kitManager;
         this.kitTimeManager = kitTimeManager;
         this.messageManager = messageManager;
-        this.plugin = plugin;
+        this.economyManager = economyManager;
     }
 
 
@@ -42,7 +40,7 @@ public class KitCommand implements CommandExecutor {
 
 
         if(!(sender instanceof Player player)) {
-            sender.sendMessage("Only players may use this command");
+            sender.sendMessage(messageManager.get("onlyPlayer", "Only players may use this command"));
             return true;
         }
 
@@ -65,10 +63,10 @@ public class KitCommand implements CommandExecutor {
             return true;
         }
 
-        if(!(player.hasPermission(kit.getPermission()))) {
+        if(!(player.hasPermission(kit.getPermission()) || player.hasPermission("fellas.kit.allkits"))) {
             player.sendMessage(messageManager.get(
-                    "insufficientPermissions",
-                    "<red>Insufficient permissions.</red> <dark_purple>(" + kit.getPermission() + ")</dark_purple>",
+                    "noPermission",
+                    "<red>Insufficient permissions.</red> <dark_purple>({permission})</dark_purple>",
                     "{permission}",
                     kit.getPermission())
             );
@@ -77,13 +75,14 @@ public class KitCommand implements CommandExecutor {
 
 
         int cooldown = kit.getCooldown();
-        String name = kit.getName().toLowerCase();
+        String key = kit.getKey();
+        String name = kit.getName();
         UUID uuid = player.getUniqueId();
 
-        if((kitTimeManager.isOnCooldown(uuid,name, cooldown)) && !player.hasPermission("fellas.kit.bypasscooldown")) {
-            String remainingCooldown = String.valueOf(kitTimeManager.getRemainingTime(uuid, name, cooldown));
+        if((kitTimeManager.isOnCooldown(uuid,key, cooldown)) && !player.hasPermission("fellas.kit.bypasscooldown")) {
+            String remainingCooldown = String.valueOf(kitTimeManager.getRemainingTime(uuid, key, cooldown));
             player.sendMessage(messageManager.get("kitCooldown",
-                    "<red>Kit still in cooldown, remaining time: </red><dark_purple>" + remainingCooldown + "s</dark_purple><red>.</red>",
+                    "<red>Kit still in cooldown, remaining time: </red><dark_purple>{remainingCooldown}s</dark_purple><red>.</red>",
                     "{remainingCooldown}",
                     remainingCooldown
             ));
@@ -92,22 +91,21 @@ public class KitCommand implements CommandExecutor {
 
 
 
-        int price = kit.getPrice();
+        double price = kit.getPrice();
         Component successMessage;
 
         if(price == 0) {
 
             successMessage = messageManager.get(
                     "kitClaimed",
-                    "<dark_purple>Kit " + kit.getName() + " has been claimed!</dark_purple>",
+                    "<dark_purple>Kit {kitName} has been claimed!</dark_purple>",
                     "{kitName}",
-                    kit.getName()
+                    name
                     );
 
-        } else if(plugin.isVaultEnabled()) {
-            Economy economy = plugin.getEconomy();
+        } else if(economyManager.isEnabled()) {
 
-            if(!economy.has(player, price)) {
+            if(!economyManager.hasEnoughMoney(player, price)) {
                 player.sendMessage(messageManager.get(
                         "notEnoughMoney",
                         "<red>You don't have enough money to claim this kit</red>"
@@ -115,7 +113,7 @@ public class KitCommand implements CommandExecutor {
                 return true;
             }
 
-            if(!economy.withdrawPlayer(player, price).transactionSuccess()) {
+            if(!economyManager.withdrawPlayer(player, price)) {
                 player.sendMessage(messageManager.get(
                         "transactionFailed",
                         "<red>Transaction failed.</red>"
@@ -123,11 +121,11 @@ public class KitCommand implements CommandExecutor {
                 return true;
             }
             Map<String, String> placeholders = new HashMap<>();
-            placeholders.put("{kitName}", kit.getName());
-            placeholders.put("{balance}", String.valueOf(economy.getBalance(player)));
+            placeholders.put("{kitName}", name);
+            placeholders.put("{balance}", String.valueOf(economyManager.getBalance(player)));
             successMessage = messageManager.get(
                     "kitPurchase",
-                    "<dark_purple>Kit " + kit.getName() + " has been purchased!</dark_purple> <yellow>New balance:</yellow> <green>€" + economy.getBalance(player) + "</green>",
+                    "<dark_purple>Kit {kitName} has been purchased!</dark_purple> <yellow>New balance:</yellow> <green>€{balance}</green>",
                     placeholders
             );
 
@@ -139,7 +137,7 @@ public class KitCommand implements CommandExecutor {
             return true;
         }
 
-        kitTimeManager.setCooldown(uuid, name);
+        kitTimeManager.setCooldown(uuid, key);
         kit.give(player);
         player.sendMessage(successMessage);
 

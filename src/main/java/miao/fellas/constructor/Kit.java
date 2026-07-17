@@ -7,13 +7,13 @@ import org.bukkit.inventory.ItemStack;
 
 public class Kit {
     private final String name;
-    private final int price;
+    private final double price;
     private final String permission;
     private final int cooldown;
     private final ItemStack[] items;
 
 
-    public Kit(String name, int price, String permission,int cooldown, ItemStack... items) {
+    public Kit(String name, double price, String permission,int cooldown, ItemStack... items) {
         this.name = name;
         this.price = price;
         this.permission = permission;
@@ -22,11 +22,15 @@ public class Kit {
 
     }
 
+    public String getKey() {
+        return name.toLowerCase();
+    }
+
     public String getName() {
         return this.name;
     }
 
-    public int getPrice() {
+    public double getPrice() {
         return this.price;
     }
 

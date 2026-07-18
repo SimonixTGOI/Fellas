@@ -15,6 +15,7 @@ Fellas is a Paper plugin that adds configurable kits, economy-based kit purchase
 * Kit list command
 * Private message command
 * Tab completion for supported commands
+* Kit GUI with kit preview
 
 ## Requirements
 
@@ -30,6 +31,7 @@ If Vault or an economy provider is not installed, free kits will still work. Pai
 | Command                    | Description                               |
 | -------------------------- | ----------------------------------------- |
 | `/kit <kit>`               | Claims a kit                              |
+| `/kit`                     | Opens kit GUI to claim and preview kits   |
 | `/kits`                    | Shows available kits                      |
 | `/kitreload`               | Reloads kits and messages from the config |
 | `/send <player> <message>` | Sends a private message to another player |

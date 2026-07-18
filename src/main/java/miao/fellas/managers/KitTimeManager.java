@@ -70,8 +70,10 @@ public class KitTimeManager {
 
         long difference = current-time;
 
+        int result = Math.toIntExact((cooldown*1000L - difference)/1000);
 
-        return Math.toIntExact((cooldown*1000L - difference)/1000);
+        return Math.max(result, 0);
+
     }
 
     public void setupFile() {

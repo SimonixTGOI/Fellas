@@ -1,20 +1,23 @@
 package miao.fellas.constructor;
 
 
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 
 public class Kit {
     private final String name;
+    private final Material material;
     private final double price;
     private final String permission;
     private final int cooldown;
     private final ItemStack[] items;
 
 
-    public Kit(String name, double price, String permission,int cooldown, ItemStack... items) {
+    public Kit(String name, Material material, double price, String permission,int cooldown, ItemStack... items) {
         this.name = name;
+        this.material = material;
         this.price = price;
         this.permission = permission;
         this.cooldown = cooldown;
@@ -28,6 +31,10 @@ public class Kit {
 
     public String getName() {
         return this.name;
+    }
+
+    public Material getMaterial() {
+        return this.material;
     }
 
     public double getPrice() {

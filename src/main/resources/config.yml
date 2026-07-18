@@ -1,12 +1,14 @@
 kits:
-  starter:
+  Starter:
+    material: IRON_SWORD
     price: 100
     permission: fellas.kit.starter
     cooldown: 60
     items:
       - IRON_SWORD:1
       - COOKED_BEEF:8
-  pvp:
+  PvP:
+    material: DIAMOND_SWORD
     price: 250
     permission: fellas.kit.pvp
     cooldown: 600
@@ -14,7 +16,8 @@ kits:
       - DIAMOND_SWORD:1
       - GOLDEN_APPLE:4
       - IRON_CHESTPLATE:1
-  archer:
+  Archer:
+    material: BOW
     price: 200
     permission: fellas.kit.archer
     cooldown: 600

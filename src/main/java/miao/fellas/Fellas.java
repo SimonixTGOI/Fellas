@@ -4,6 +4,8 @@ import miao.fellas.commands.KitCommand;
 import miao.fellas.commands.KitReloadCommand;
 import miao.fellas.commands.Kits;
 import miao.fellas.commands.Send;
+import miao.fellas.containers.KitContainer;
+import miao.fellas.listeners.ClickListener;
 import miao.fellas.managers.EconomyManager;
 import miao.fellas.managers.KitManager;
 import miao.fellas.managers.KitTimeManager;
@@ -25,16 +27,17 @@ public final class Fellas extends JavaPlugin {
         // Plugin startup logic
         getLogger().info("Plugin is currently loading...");
 
+        MessageManager messageManager = new MessageManager(this);
 
-
-
-        KitManager kitManager = new KitManager(this);
-        KitTimeManager kitTimeManager = new KitTimeManager(this);
         EconomyManager economyManager = new EconomyManager(this);
+        KitTimeManager kitTimeManager = new KitTimeManager(this);
+        KitManager kitManager = new KitManager(this, messageManager, kitTimeManager, economyManager);
+        KitContainer kitContainer = new KitContainer(this, kitManager, kitTimeManager);
+        ClickListener clickListener = new ClickListener(kitManager, kitContainer);
 
         economyManager.setup();
 
-        MessageManager messageManager = new MessageManager(this);
+
         getLogger().info("MessageManager loaded!");
 
 
@@ -52,10 +55,12 @@ public final class Fellas extends JavaPlugin {
 
         Objects.requireNonNull(getCommand("kitreload")).setExecutor(new KitReloadCommand(kitManager, messageManager, this));
 
-        Objects.requireNonNull(getCommand("kit")).setExecutor(new KitCommand(kitManager, kitTimeManager, messageManager, economyManager));
+        Objects.requireNonNull(getCommand("kit")).setExecutor(new KitCommand(kitManager, messageManager, kitContainer));
         Objects.requireNonNull(getCommand("kit")).setTabCompleter(new KitTabCompleter(kitManager));
 
         getLogger().info("Commands loaded!");
+
+        getServer().getPluginManager().registerEvents(clickListener, this);
 
         getLogger().info("Plugin enabled!");
     }

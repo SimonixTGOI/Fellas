@@ -5,10 +5,12 @@ miao\fellas\Fellas.class
 miao\fellas\tabs\KitsTabCompleter.class
 miao\fellas\tabs\KitTabCompleter.class
 miao\fellas\utils\MessageUtil.class
+miao\fellas\listeners\ClickListener.class
 miao\fellas\managers\MessageManager.class
 miao\fellas\constructor\Kit.class
 miao\fellas\managers\EconomyManager.class
 miao\fellas\commands\KitReloadCommand.class
+miao\fellas\containers\KitContainer.class
 miao\fellas\commands\Send.class
 miao\fellas\commands\KitCommand.class
 miao\fellas\commands\Kits.class

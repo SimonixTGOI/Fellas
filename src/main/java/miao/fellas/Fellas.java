@@ -33,7 +33,7 @@ public final class Fellas extends JavaPlugin {
         KitTimeManager kitTimeManager = new KitTimeManager(this);
         KitManager kitManager = new KitManager(this, messageManager, kitTimeManager, economyManager);
         KitContainer kitContainer = new KitContainer(this, kitManager, kitTimeManager);
-        ClickListener clickListener = new ClickListener(kitManager, kitContainer);
+        ClickListener clickListener = new ClickListener(this, kitManager, kitContainer);
 
         economyManager.setup();
 

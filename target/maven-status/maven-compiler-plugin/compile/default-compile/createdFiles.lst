@@ -1,4 +1,5 @@
 miao\fellas\managers\KitTimeManager.class
+miao\fellas\Tasks\KitGuiUpdateTask.class
 miao\fellas\tabs\SendTabCompleter.class
 miao\fellas\managers\KitManager.class
 miao\fellas\Fellas.class

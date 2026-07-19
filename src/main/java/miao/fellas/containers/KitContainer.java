@@ -125,10 +125,14 @@ public class KitContainer {
         if(remainingTime > 0) {
             lore.add(MessageUtil.color("<yellow>Status:</yellow> <red>"+ remainingTime + "s</red>")
                     .decoration(TextDecoration.ITALIC, false));
+            if(player.hasPermission("fellas.kit.bypasscooldown")) {
+                lore.add(MessageUtil.color("<gray>You can claim it anyway.</gray>"));
+            }
         } else {
             lore.add(MessageUtil.color("<yellow>Status:</yellow> <green>Ready.</green>")
                     .decoration(TextDecoration.ITALIC, false));
         }
+
 
 
 

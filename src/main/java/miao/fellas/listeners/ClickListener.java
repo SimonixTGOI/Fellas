@@ -22,58 +22,59 @@ public class ClickListener implements Listener {
         this.kitManager = Objects.requireNonNull(kitManager);
         this.kitContainer = Objects.requireNonNull(kitContainer);
     }
+
     @EventHandler
     public void onKitSelection(InventoryClickEvent event) {
-
-        if(!event.getView().title().equals(Component.text("Kits"))) {
-            return;
-        }
-
-        event.setCancelled(true);
         ItemStack item = event.getCurrentItem();
         Player player = (Player) event.getWhoClicked();
 
-        if(item == null || item.getType() == Material.AIR) {
-            return;
-        }
+        //Kit list
+        if (event.getView().title().equals(Component.text("Kits"))) {
 
-        if(!item.hasItemMeta() || !item.getItemMeta().hasDisplayName()) {
-            return;
-        }
-        Component component = item.getItemMeta().customName();
-        if(component == null) return;
-        String key = PlainTextComponentSerializer.plainText().serialize(component);
+            event.setCancelled(true);
 
-        if(event.isLeftClick()) {
 
-            boolean success = kitManager.kitGive(player, key);
 
-            if(success) {
-                player.closeInventory();
+            if (item == null || item.getType() == Material.AIR) {
+                return;
+            }
+
+            if (!item.hasItemMeta() || item.getItemMeta().customName() == null) {
+                return;
+            }
+            Component component = item.getItemMeta().customName();
+            if (component == null) return;
+            String key = PlainTextComponentSerializer.plainText().serialize(component).toLowerCase();
+
+            if (event.isLeftClick()) {
+
+                boolean success = kitManager.kitGive(player, key);
+
+                if (success) {
+                    player.closeInventory();
+                }
+                return;
+            }
+            if (event.isRightClick()) {
+                kitContainer.openKit(player, key);
             }
             return;
         }
-        if(event.isRightClick()) {
-            kitContainer.openKit(player, key);
-        }
 
 
-    }
-
-    @EventHandler
-    public void onKitClick(InventoryClickEvent event) {
+        //Kit Preview
         Component component = event.getView().title();
-        String invName = PlainTextComponentSerializer.plainText().serialize(component).toLowerCase();
+        String title = PlainTextComponentSerializer.plainText().serialize(component).toLowerCase();
 
-        if(!kitManager.getKitNames().contains(invName)) return;
-        event.setCancelled(true);
-        ItemStack item = event.getCurrentItem();
-        if(item == null || item.getType() == Material.AIR) return;
+        if (kitManager.getKitNames().contains(title)) {
+            event.setCancelled(true);
+            if (item == null || item.getType() == Material.AIR) return;
 
-        if(item.getType() == Material.BARRIER) {
+            if (item.getType() == Material.BARRIER) {
 
-            Player player = (Player) event.getWhoClicked();
-            kitContainer.openKitContainer(player);
+                kitContainer.openKitContainer(player);
+            }
         }
     }
+
 }

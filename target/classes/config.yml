@@ -43,6 +43,7 @@ messages:
   kitsWoutCooldown: "<blue>{kitName}</blue> <dark_purple>-</dark_purple> <yellow>price:</yellow> <green>€{price}</green> <dark_purple>-</dark_purple> <yellow>cooldown: </yellow><green>ready.</green>"
   kitsNotOne: "<red>No kits available.</red>"
   kitsHeader: "<dark_purple>Available kits:</dark_purple>"
+  kitsNotEnoughSpace: "<red>Not enough space in your inventory.</red>"
   sendTargetMissing: "<red>Target player missing.</red>"
   sendTargetNotOnline: "<red>{player} is not online.</red>"
   sendMessageMissing: "<red>Message missing.</red>"

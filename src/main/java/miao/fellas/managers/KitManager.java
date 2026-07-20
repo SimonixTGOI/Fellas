@@ -16,6 +16,7 @@ public class KitManager {
     private final MessageManager messageManager;
     private final KitTimeManager kitTimeManager;
     private final EconomyManager economyManager;
+    private final InventoryManager inventoryManager;
 
 
     public void reloadKits() {
@@ -104,7 +105,7 @@ public class KitManager {
         this.messageManager = messageManager;
         this.kitTimeManager = kitTimeManager;
         this.economyManager = economyManager;
-
+        this.inventoryManager = new InventoryManager();
         reloadKits();
 
     }
@@ -158,6 +159,10 @@ public class KitManager {
             ));
             return false;
         }
+        if(inventoryManager.getFreeSlots(player) < kit.getItems().length) {
+            player.sendMessage(messageManager.get("kitsNotEnoughSpace", "<red>Not enough space in your inventory.</red>"));
+            return false;
+        }
 
 
 
@@ -206,6 +211,7 @@ public class KitManager {
             ));
             return false;
         }
+
 
         kitTimeManager.setCooldown(uuid, key);
         kit.give(player);

@@ -17,14 +17,11 @@ public class KitCommand implements CommandExecutor {
 
     private final KitManager kitManager;
     private final MessageManager messageManager;
-    private final KitContainer kitContainer;
 
 
-    public KitCommand(KitManager kitManager, MessageManager messageManager, KitContainer kitContainer) {
+    public KitCommand(KitManager kitManager, MessageManager messageManager) {
         this.kitManager = kitManager;
         this.messageManager = messageManager;
-        this.kitContainer = kitContainer;
-
     }
 
 
@@ -40,7 +37,7 @@ public class KitCommand implements CommandExecutor {
         }
 
         if (args.length == 0) {
-            kitContainer.openKitContainer(player);
+            player.sendMessage(messageManager.get("kitUsage", "<red>Usage: /kit [kit]</red>"));
             return true;
         }
 

@@ -50,12 +50,12 @@ public final class Fellas extends JavaPlugin {
 
 
 
-        Objects.requireNonNull(getCommand("kits")).setExecutor(new Kits(kitManager, kitTimeManager, messageManager));
+        Objects.requireNonNull(getCommand("kits")).setExecutor(new Kits(messageManager, kitContainer));
         Objects.requireNonNull(getCommand("kits")).setTabCompleter(new KitsTabCompleter());
 
         Objects.requireNonNull(getCommand("kitreload")).setExecutor(new KitReloadCommand(kitManager, messageManager, this));
 
-        Objects.requireNonNull(getCommand("kit")).setExecutor(new KitCommand(kitManager, messageManager, kitContainer));
+        Objects.requireNonNull(getCommand("kit")).setExecutor(new KitCommand(kitManager, messageManager));
         Objects.requireNonNull(getCommand("kit")).setTabCompleter(new KitTabCompleter(kitManager));
 
         getLogger().info("Commands loaded!");

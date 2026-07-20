@@ -16,6 +16,8 @@ Fellas is a Paper plugin that adds configurable kits, economy-based kit purchase
 * Private message command
 * Tab completion for supported commands
 * Kit GUI with kit preview
+* Live cooldown status in the kit GUI 
+* Inventory space checks before claiming kits
 
 ## Requirements
 
@@ -29,10 +31,9 @@ If Vault or an economy provider is not installed, free kits will still work. Pai
 ## Commands
 
 | Command                    | Description                               |
-| -------------------------- | ----------------------------------------- |
+| -------------------------- |-------------------------------------------|
 | `/kit <kit>`               | Claims a kit                              |
-| `/kit`                     | Opens kit GUI to claim and preview kits   |
-| `/kits`                    | Shows available kits                      |
+| `/kits`                    | Opens kit GUI to claim and preview kits   |
 | `/kitreload`               | Reloads kits and messages from the config |
 | `/send <player> <message>` | Sends a private message to another player |
 
@@ -60,35 +61,54 @@ Example `config.yml`:
 ```yaml
 kits:
   Starter:
-    price: 0
+    material: IRON_SWORD
+    price: 100
     permission: fellas.kit.starter
     cooldown: 60
     items:
-      - STONE_SWORD:1
-      - BREAD:16
-
-  PvP:
-    price: 100
-    permission: fellas.kit.pvp
-    cooldown: 300
-    items:
       - IRON_SWORD:1
-      - COOKED_BEEF:16
-
+      - COOKED_BEEF:8
+  PvP:
+    material: DIAMOND_SWORD
+    price: 250
+    permission: fellas.kit.pvp
+    cooldown: 600
+    items:
+      - DIAMOND_SWORD:1
+      - GOLDEN_APPLE:4
+      - IRON_CHESTPLATE:1
+  Archer:
+    material: BOW
+    price: 200
+    permission: fellas.kit.archer
+    cooldown: 600
+    items:
+      - BOW:1
+      - LEATHER_LEGGINGS:1
+      - LEATHER_CHESTPLATE:1
+      - GOLDEN_APPLE:8
+      - ARROW:64
 messages:
-  onlyPlayer: "<red>Only players may use this command.</red>"
   noPermission: "<red>Insufficient permissions.</red> <dark_purple>({permission})</dark_purple>"
-  kitUsage: "<red>Usage: /kit [kit]</red>"
+  onlyPlayer: "Only players may use this command"
   kitNotFound: "<red>This kit does not exist.</red>"
+  kitUsage: "<red>Usage: /kit [kit]</red>"
+  economyDisabled: "<red>Economy is temporarily disabled. This kit cannot be claimed.</red>"
+  kitCooldown: "<red>Kit still in cooldown, remaining time: </red><dark_purple>{remainingCooldown}s</dark_purple><red>.</red>"
   kitClaimed: "<dark_purple>Kit {kitName} has been claimed!</dark_purple>"
   kitPurchase: "<dark_purple>Kit {kitName} has been purchased!</dark_purple> <yellow>New balance:</yellow> <green>€{balance}</green>"
-  kitCooldown: "<red>Kit still in cooldown, remaining time:</red> <dark_purple>{remainingCooldown}s</dark_purple><red>.</red>"
-  notEnoughMoney: "<red>You don't have enough money to claim this kit.</red>"
   transactionFailed: "<red>Transaction failed.</red>"
-  economyDisabled: "<red>Economy is temporarily disabled. This paid kit cannot be claimed.</red>"
-  kitsHeader: "<dark_purple>Available kits:</dark_purple>"
-  kitsNotOne: "<red>No kits available.</red>"
+  notEnoughMoney: "<red>You don't have enough money to claim this kit</red>"
   kitReload: "<green>Kits reloaded.</green>"
+  kitsWithCooldown: "<blue>{kitName}</blue> <dark_purple>-</dark_purple> <yellow>price:</yellow> <green>€{price}</green> <dark_purple>-</dark_purple> <yellow>cooldown: {remainingCooldown}</yellow><dark_purple>/</dark_purple><yellow>{cooldown}s.</yellow>"
+  kitsWoutCooldown: "<blue>{kitName}</blue> <dark_purple>-</dark_purple> <yellow>price:</yellow> <green>€{price}</green> <dark_purple>-</dark_purple> <yellow>cooldown: </yellow><green>ready.</green>"
+  kitsNotOne: "<red>No kits available.</red>"
+  kitsHeader: "<dark_purple>Available kits:</dark_purple>"
+  kitsNotEnoughSpace: "<red>Not enough space in your inventory.</red>"
+  sendTargetMissing: "<red>Target player missing.</red>"
+  sendTargetNotOnline: "<red>{player} is not online.</red>"
+  sendMessageMissing: "<red>Message missing.</red>"
+  sendMessageSent: "<blue>{sender}</blue> <dark_purple>sent you a message: </dark_purple>{message}"
 ```
 
 ## Cooldowns

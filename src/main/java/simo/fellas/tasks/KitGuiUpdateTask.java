@@ -1,4 +1,4 @@
-package simo.fellas.Tasks;
+package simo.fellas.tasks;
 
 import simo.fellas.containers.KitContainer;
 import org.bukkit.entity.Player;

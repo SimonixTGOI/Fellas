@@ -1,6 +1,6 @@
-package miao.fellas.managers;
+package simo.fellas.managers;
 
-import miao.fellas.constructor.Kit;
+import simo.fellas.constructor.Kit;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;

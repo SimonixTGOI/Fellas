@@ -1,6 +1,6 @@
-package miao.fellas.managers;
+package simo.fellas.managers;
 
-import miao.fellas.utils.MessageUtil;
+import simo.fellas.utils.MessageUtil;
 import net.kyori.adventure.text.Component;
 import org.bukkit.plugin.Plugin;
 

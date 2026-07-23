@@ -1,4 +1,4 @@
-package miao.fellas.constructor;
+package simo.fellas.constructor;
 
 
 import org.bukkit.Material;

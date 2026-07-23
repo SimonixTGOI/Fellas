@@ -1,15 +1,12 @@
-package miao.fellas.commands;
+package simo.fellas.commands;
 
 
-import miao.fellas.containers.KitContainer;
-import miao.fellas.managers.KitManager;
-import miao.fellas.managers.KitTimeManager;
-import miao.fellas.managers.MessageManager;
+import simo.fellas.managers.KitManager;
+import simo.fellas.managers.MessageManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 
 

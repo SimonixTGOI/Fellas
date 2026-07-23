@@ -1,7 +1,7 @@
-package miao.fellas.commands;
+package simo.fellas.commands;
 
-import miao.fellas.containers.KitContainer;
-import miao.fellas.managers.MessageManager;
+import simo.fellas.containers.KitContainer;
+import simo.fellas.managers.MessageManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;

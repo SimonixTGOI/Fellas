@@ -1,6 +1,6 @@
 name: fellas
 version: '1.0-SNAPSHOT'
-main: miao.fellas.Fellas
+main: simo.fellas.Fellas
 api-version: '26.1.2'
 softdepend:
   - Vault
@@ -21,7 +21,9 @@ commands:
   kits:
     description: Shows the list of the available kits
     usage: /kits
-
+  ping:
+    description: Shows the current ping
+    usage: /ping
 
 
 
@@ -58,4 +60,7 @@ permissions:
 
   fellas.kits:
     description: grants the use of /kits
+    default: true
+  fellas.ping:
+    description: grants the use of /ping
     default: true

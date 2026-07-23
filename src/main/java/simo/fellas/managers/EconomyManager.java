@@ -1,6 +1,6 @@
-package miao.fellas.managers;
+package simo.fellas.managers;
 
-import miao.fellas.Fellas;
+import simo.fellas.Fellas;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;

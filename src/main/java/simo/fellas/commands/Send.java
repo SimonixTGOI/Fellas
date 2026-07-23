@@ -1,6 +1,6 @@
-package miao.fellas.commands;
+package simo.fellas.commands;
 
-import miao.fellas.managers.MessageManager;
+import simo.fellas.managers.MessageManager;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

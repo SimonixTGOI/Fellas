@@ -1,7 +1,8 @@
-package miao.fellas.listeners;
+package simo.fellas.listeners;
 
-import miao.fellas.containers.KitContainer;
-import miao.fellas.managers.KitManager;
+import org.bukkit.inventory.meta.ItemMeta;
+import simo.fellas.containers.KitContainer;
+import simo.fellas.managers.KitManager;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.bukkit.Material;
@@ -20,12 +21,16 @@ public class ClickListener implements Listener {
     private final KitManager kitManager;
     private final KitContainer kitContainer;
     private final NamespacedKey kitKey;
+    private final NamespacedKey guiKey;
+    private final NamespacedKey pageKey;
 
 
     public ClickListener(Plugin plugin, KitManager kitManager, KitContainer kitContainer) {
         this.kitManager = Objects.requireNonNull(kitManager);
         this.kitContainer = Objects.requireNonNull(kitContainer);
         this.kitKey = new NamespacedKey(plugin, "kit_key");
+        this.guiKey = new NamespacedKey(plugin, "gui_action");
+        this.pageKey = new NamespacedKey(plugin, "page");
     }
 
     @EventHandler
@@ -47,7 +52,35 @@ public class ClickListener implements Listener {
             if (!item.hasItemMeta() || item.getItemMeta().customName() == null) {
                 return;
             }
-            String key = item.getItemMeta().getPersistentDataContainer().get(kitKey,  PersistentDataType.STRING);
+            ItemMeta meta = item.getItemMeta();
+            String action = meta.getPersistentDataContainer().get(guiKey, PersistentDataType.STRING);
+            if (action != null) {
+                Integer pageInteger = meta.getPersistentDataContainer().get(pageKey, PersistentDataType.INTEGER);
+                if(pageInteger == null) {
+                    return;
+                }
+                int targetPage;
+                int page = pageInteger;
+                switch (action) {
+                    case "next" -> {
+                        targetPage = page + 1;
+                        kitContainer.openKitContainer(player, targetPage);
+                        return;
+                    }
+                    case "previous" -> {
+                        targetPage = page - 1;
+                        kitContainer.openKitContainer(player, targetPage);
+                        return;
+                    }
+                    case "page" -> {
+                        return;
+                    }
+                }
+            }
+
+
+
+            String key = meta.getPersistentDataContainer().get(kitKey,  PersistentDataType.STRING);
             if (key == null) return;
             if (event.isLeftClick()) {
 

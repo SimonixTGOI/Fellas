@@ -1,4 +1,4 @@
-package miao.fellas.managers;
+package simo.fellas.managers;
 
 import org.bukkit.Material;
 import org.bukkit.entity.Player;

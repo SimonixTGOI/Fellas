@@ -1,6 +1,6 @@
-package miao.fellas.tabs;
+package simo.fellas.tabs;
 
-import miao.fellas.managers.KitManager;
+import simo.fellas.managers.KitManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;

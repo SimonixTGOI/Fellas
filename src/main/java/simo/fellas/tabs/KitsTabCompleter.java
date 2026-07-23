@@ -1,4 +1,4 @@
-package miao.fellas.tabs;
+package simo.fellas.tabs;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;

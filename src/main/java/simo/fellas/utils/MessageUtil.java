@@ -1,4 +1,4 @@
-package miao.fellas.utils;
+package simo.fellas.utils;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;

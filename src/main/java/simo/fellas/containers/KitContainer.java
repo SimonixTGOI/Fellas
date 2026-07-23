@@ -68,31 +68,12 @@ public class KitContainer {
                 }
 
                 if(page > 0) {
-                    ItemStack previousPage = new ItemStack(Material.GRAY_STAINED_GLASS_PANE);
-                    ItemMeta previousPageMeta = previousPage.getItemMeta();
-                    previousPageMeta.customName(MessageUtil.color("Previous page")
-                            .decoration(TextDecoration.ITALIC, false));
-                    previousPageMeta.getPersistentDataContainer().set(guiKey, PersistentDataType.STRING, "previous");
-                    previousPageMeta.getPersistentDataContainer().set(pageKey, PersistentDataType.INTEGER, page);
-                    previousPage.setItemMeta(previousPageMeta);
-                    inventory.setItem(PREVIOUS_SLOT, previousPage);
+                    inventory.setItem(PREVIOUS_SLOT, createPageItem("Previous Page", "previous", page));
                 }
                 if(endIndex < kits.length) {
-                    ItemStack nextPage = new ItemStack(Material.GRAY_STAINED_GLASS_PANE);
-                    ItemMeta nextPageMeta = nextPage.getItemMeta();
-                    nextPageMeta.customName(MessageUtil.color("Next Page")
-                            .decoration(TextDecoration.ITALIC, false));
-                    nextPageMeta.getPersistentDataContainer().set(guiKey, PersistentDataType.STRING, "next");
-                    nextPageMeta.getPersistentDataContainer().set(pageKey, PersistentDataType.INTEGER, page);
-                    nextPage.setItemMeta(nextPageMeta);
-                    inventory.setItem(NEXT_SLOT, nextPage);
+                    inventory.setItem(NEXT_SLOT, createPageItem("Next Page", "next", page));
                 }
-                ItemStack currentPage = new ItemStack(Material.PAPER);
-                ItemMeta currentPageMeta = currentPage.getItemMeta();
-                currentPageMeta.customName(MessageUtil.color("Page: " + (page + 1))
-                        .decoration(TextDecoration.ITALIC, false));
-                currentPage.setItemMeta(currentPageMeta);
-                inventory.setItem(PAGE_SLOT, currentPage);
+                inventory.setItem(PAGE_SLOT, createCurrentPageItem(page));
 
                 player.openInventory(inventory);
                 new KitGuiUpdateTask(player, this, inventory, page)
@@ -203,5 +184,25 @@ public class KitContainer {
             inventory.setItem(slot, createKitItem(player, kit));
             slot++;
         }
+    }
+
+    private ItemStack createPageItem(String name, String action, int page) {
+        ItemStack item = new ItemStack(Material.GRAY_STAINED_GLASS_PANE);
+        ItemMeta meta = item.getItemMeta();
+        meta.customName(MessageUtil.color(name)
+                .decoration(TextDecoration.ITALIC, false));
+        meta.getPersistentDataContainer().set(guiKey, PersistentDataType.STRING, action);
+        meta.getPersistentDataContainer().set(pageKey, PersistentDataType.INTEGER, page);
+        item.setItemMeta(meta);
+        return item;
+    }
+
+    private ItemStack createCurrentPageItem(int page) {
+        ItemStack item = new ItemStack(Material.PAPER);
+        ItemMeta meta = item.getItemMeta();
+        meta.customName(MessageUtil.color("Page: " + (page + 1))
+                .decoration(TextDecoration.ITALIC, false));
+        item.setItemMeta(meta);
+        return item;
     }
 }

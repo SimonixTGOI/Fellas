@@ -159,7 +159,7 @@ public class KitManager {
             ));
             return false;
         }
-        if(inventoryManager.getFreeSlots(player) < kit.getItems().length) {
+        if(!inventoryManager.canFitItems(player, kit.getItems())) {
             player.sendMessage(messageManager.get("kitsNotEnoughSpace", "<red>Not enough space in your inventory.</red>"));
             return false;
         }

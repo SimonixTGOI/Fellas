@@ -1,5 +1,6 @@
 package simo.fellas;
 
+import org.bukkit.plugin.java.JavaPlugin;
 import simo.fellas.commands.*;
 import simo.fellas.containers.KitContainer;
 import simo.fellas.listeners.ClickListener;
@@ -9,8 +10,7 @@ import simo.fellas.managers.KitTimeManager;
 import simo.fellas.managers.MessageManager;
 import simo.fellas.tabs.KitTabCompleter;
 import simo.fellas.tabs.KitsTabCompleter;
-import simo.fellas.tabs.SendTabCompleter;
-import org.bukkit.plugin.java.JavaPlugin;
+import simo.fellas.tabs.OnlinePlayersTabCompleter;
 
 import java.util.Objects;
 
@@ -40,9 +40,11 @@ public final class Fellas extends JavaPlugin {
 
 
         Objects.requireNonNull(getCommand("send")).setExecutor(new Send(messageManager));
-        Objects.requireNonNull(getCommand("send")).setTabCompleter(new SendTabCompleter());
+        Objects.requireNonNull(getCommand("send")).setTabCompleter(new OnlinePlayersTabCompleter());
         Objects.requireNonNull(getCommand("ping")).setExecutor(new Ping(messageManager));
-
+        Objects.requireNonNull(getCommand("hat")).setExecutor(new HatCommand(messageManager));
+        Objects.requireNonNull(getCommand("invsee")).setExecutor(new InvSeeCommand(messageManager));
+        Objects.requireNonNull(getCommand("invsee")).setTabCompleter(new OnlinePlayersTabCompleter());
 
 
 

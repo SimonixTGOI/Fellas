@@ -24,6 +24,12 @@ commands:
   ping:
     description: Shows the current ping
     usage: /ping
+  hat:
+    description: Puts as a helmet everything in your hand
+    usage: /hat
+  invsee:
+    description: Opens another player's inventory
+    usage: /invsee <player>
 
 
 
@@ -64,3 +70,9 @@ permissions:
   fellas.ping:
     description: grants the use of /ping
     default: true
+  fellas.hat:
+    description: grants the use of /hat
+    default: true
+  fellas.invsee:
+    description: grants the use of /invsee
+    default: op

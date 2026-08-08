@@ -48,4 +48,7 @@ messages:
   sendTargetNotOnline: "<red>{player} is not online.</red>"
   sendMessageMissing: "<red>Message missing.</red>"
   sendMessageSent: "<blue>{sender}</blue> <dark_purple>sent you a message: </dark_purple>{message}"
+  hat: "<green>Now you have an hat!</green>"
+  invseeUsage: "<red>Usage: /invsee [player]</red>"
+  invseePlayerNotFound: "<red>No player found.</red>"
 
